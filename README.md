@@ -1,8 +1,8 @@
 # Stock Market Prediction Bot
 
-Python research project implementing the supplied resume description: Pandas/NumPy OHLCV processing, **34 technical features**, a TensorFlow/Keras next-session return regressor, and custom expanding-window evaluation across multiple tickers. Includes a lightweight ridge baseline. No brokerage account or order placement is involved.
+Stock market forecasting research platform featuring Pandas/NumPy OHLCV processing, **34 technical features**, a TensorFlow/Keras next-session return regressor, and custom expanding-window evaluation across multiple tickers. Includes a lightweight ridge baseline. No brokerage account or order placement is involved.
 
-See [RESULTS.md](RESULTS.md) for the completed historical evaluation and recommended resume changes: **50.28% accuracy across 6,408 predictions**, below the **54.43% always-up baseline**.
+See [RESULTS.md](RESULTS.md) for the completed historical evaluation: **50.28% accuracy across 6,408 predictions**, below the **54.43% always-up baseline**.
 
 ## Setup (PowerShell, Python 3.11)
 
@@ -43,9 +43,9 @@ Real historical market evaluation with Keras:
 .\.venv\Scripts\python -m stockbot --source yahoo --backend keras --tickers AAPL MSFT SPY --start 2015-01-01 --end 2025-10-01 --output outputs/market
 ```
 
-The download end date is exclusive. Defaults end within the resume's stated project period. Yahoo availability may vary. Downloaded adjusted OHLCV snapshots are saved for reproducibility. For your own data, provide `data/AAPL.csv` etc. with `Date,Open,High,Low,Close,Volume` and run `--source csv --data-dir data`. CSV dates determine the period; `--start/--end` only apply to downloads. Use consistent split/dividend adjustment for all OHLC columns. Never mix adjusted close with unadjusted open/high/low.
+The download end date is exclusive. The default historical dataset ends September 30, 2025. Yahoo availability may vary. Downloaded adjusted OHLCV snapshots are saved for reproducibility. For your own data, provide `data/AAPL.csv` etc. with `Date,Open,High,Low,Close,Volume` and run `--source csv --data-dir data`. CSV dates determine the period; `--start/--end` only apply to downloads. Use consistent split/dividend adjustment for all OHLC columns. Never mix adjusted close with unadjusted open/high/low.
 
-Each ticker produces `ohlcv.csv`, `backtest.csv`, a scaler and model, and `forecast.json`. The forecast is for the session after the last supplied observation, which may be historical. It is a point estimate, not a calibrated probability. `report.json` contains configuration, hashes, features, per-ticker metrics and pooled accuracy. `RESUME_UPDATE.md` explicitly compares results with the resume. Use a fresh output directory for each run.
+Each ticker produces `ohlcv.csv`, `backtest.csv`, a scaler and model, and `forecast.json`. The forecast is for the session after the last supplied observation, which may be historical. It is a point estimate, not a calibrated probability. `report.json` contains configuration, hashes, features, per-ticker metrics and pooled accuracy. `EVALUATION_SUMMARY.md` summarizes the run and its measured accuracy. Use a fresh output directory for each run.
 
 ## Methodology
 
@@ -64,11 +64,3 @@ python -m unittest discover -s tests -v
 ```
 
 Tests cover feature causality, target alignment, chronological evaluation, execution costs, and invalid input rejection.
-
-## Resume accuracy
-
-The supplied **65% directional accuracy is unverified**, not a target to force through tuning. Only use a measured real-data result with its tickers, period, model and evaluation method. Synthetic test scores do not support that claim. The implementation has 34 features, so “20+” remains accurate. Historical project dates must reflect when you actually did the work.
-
-Suggested wording until a real-data run is verified:
-
-> Engineered 34 technical features using Pandas and NumPy and built a TensorFlow/Keras pipeline for next-session stock return prediction. Implemented automated, purged walk-forward backtesting across multiple tickers with directional baselines and transaction-cost modeling.

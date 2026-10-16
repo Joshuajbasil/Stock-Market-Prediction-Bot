@@ -81,16 +81,14 @@ def main():
     (root/'report.json').write_text(json.dumps(report, indent=2))
     status = ('SYNTHETIC DEMO: does not validate market performance.' if args.source == 'demo' else
               'Historical evaluation on the recorded dataset; not a guarantee of future accuracy.')
-    note = (f'# Resume evidence\n\n{status}\n\n'
-            f'- Implemented technical features: {len(features)} (resume says 20+).\n'
+    note = (f'# Evaluation summary\n\n{status}\n\n'
+            f'- Implemented technical features: {len(features)}.\n'
             f'- Backend: {args.backend}.\n'
             f'- Evaluated tickers: {", ".join(report["tickers"])}.\n'
             f'- Out-of-sample predictions: {len(combined):,}.\n'
-            f'- Measured directional accuracy: {accuracy:.2%}. Resume claim: 65%.\n'
-            '- Do not retain the 65% claim unless a documented real-data evaluation supports it.\n'
-            '- Demo results must never be quoted as stock-market performance.\n'
-            '- Original Aug–Oct 2025 project dates cannot be verified by this implementation.\n')
-    (root/'RESUME_UPDATE.md').write_text(note)
+            f'- Measured directional accuracy: {accuracy:.2%}.\n'
+            '- Synthetic results do not measure stock-market performance.\n')
+    (root/'EVALUATION_SUMMARY.md').write_text(note)
     if args.dashboard_output:
         print(f'Evaluation complete: {len(combined):,} predictions across {len(report["tickers"])} tickers. Directional accuracy: {accuracy:.2%}.')
     else:
